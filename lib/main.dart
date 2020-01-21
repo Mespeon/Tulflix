@@ -17,17 +17,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: Color.fromRGBO(17, 17, 17, 1)
-      ),
+      )
     );
   }
 }
 
 // class SplashScreen extends StatelessWidget {
-//   final _splashHeader = GoogleFonts.bebasNeue(
-//     textStyle: TextStyle(color: Colors.red[700]),
-//     fontSize: 72
-//   );
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -37,16 +32,7 @@ class MyApp extends StatelessWidget {
 //           mainAxisAlignment: MainAxisAlignment.center,
 //           crossAxisAlignment: CrossAxisAlignment.center,
 //           children: <Widget>[
-//             Text('TULFLIX', style: _splashHeader),
-//             Container(
-//               color: Colors.grey[900],
-//               child: Center(
-//                 child: Padding(
-//                   padding: EdgeInsets.symmetric(),
-//                   child: Text('Got sumbong?')
-//                 )
-//               )
-//             ),
+//             Text('TULFLIX', style: AppThemeData.splashTextRed),
 //           ],
 //         )
 //       )

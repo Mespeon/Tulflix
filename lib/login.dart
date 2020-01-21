@@ -44,27 +44,53 @@ class LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-          child: Text(loginStr, style: AppThemeData.heading)
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-          child: Text(loginSubtitle, style: AppThemeData.subtitle3)
-        ),
-        Form(
-          child: Column(
-            children: <Widget>[
-              Text('Form form stuff', style: AppThemeData.bodyText2)
-            ],
+    return Padding(
+      padding: EdgeInsets.only(left: 16.0, right: 16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(loginStr, style: AppThemeData.heading),
+          Text(loginSubtitle, style: AppThemeData.subtitle3),
+          Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  autovalidate: false,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your email address here.'
+                  ),
+                )
+              ],
+            ),
           )
-        ),
-      ],
+        ],
+      ),
     );
+    // return Column(
+    //   mainAxisSize: MainAxisSize.max,
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   mainAxisAlignment: MainAxisAlignment.center,
+    //   children: <Widget>[
+    //     Padding(
+    //       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+    //       child: Text(loginStr, style: AppThemeData.heading)
+    //     ),
+    //     Padding(
+    //       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+    //       child: Text(loginSubtitle, style: AppThemeData.subtitle3)
+    //     ),
+    //     Form(
+    //       child: Column(
+    //         children: <Widget>[
+    //           Text('Form form stuff', style: AppThemeData.bodyText2)
+    //         ],
+    //       )
+    //     ),
+    //   ],
+    // );
   }
 }

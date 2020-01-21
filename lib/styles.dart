@@ -23,7 +23,7 @@ abstract class AppThemeData {
   /// TextStyles
   static const TextStyle splashTextRed = TextStyle(fontSize: oversizedHeadings, fontFamily: 'BebasNeue', color: netflixRed);
   static const TextStyle splashTextWhite = TextStyle(fontSize: subtitles2, fontFamily: 'BebasNeue', color: offWhite);
-  static const TextStyle raisedButtonsText = TextStyle(color: offWhite);
+  static const TextStyle raisedButtonsText = TextStyle(color: offWhite, fontWeight: FontWeight.bold);
   static const TextStyle flatButtonsText = TextStyle(color: offWhite, fontSize: body3);
   static const TextStyle heading = TextStyle(color: offWhite, fontSize: headings, fontFamily: 'BebasNeue');
   static const TextStyle title = TextStyle(color: offWhite, fontSize: titles, fontFamily: 'BebasNeue');
