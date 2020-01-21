@@ -69,5 +69,10 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: BebasNeue
+      fonts:
+        - asset: fonts/Bebas_Neue/BebasNeue-Regular.ttf
+          weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

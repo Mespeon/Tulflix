@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // Routing
 import 'package:tulflix/constants.dart';
@@ -12,46 +11,48 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: Router.generateRoute,
+      initialRoute: walkthrough,
       title: 'Tulflix',
       theme: ThemeData(
         primarySwatch: Colors.red,
+        scaffoldBackgroundColor: Color.fromRGBO(17, 17, 17, 1)
       ),
-      home: SplashScreen(),
     );
   }
 }
 
-class SplashScreen extends StatelessWidget {
-  final _splashHeader = GoogleFonts.bebasNeue(
-    textStyle: TextStyle(color: Colors.red[700]),
-    fontSize: 72
-  );
+// class SplashScreen extends StatelessWidget {
+//   final _splashHeader = GoogleFonts.bebasNeue(
+//     textStyle: TextStyle(color: Colors.red[700]),
+//     fontSize: 72
+//   );
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.grey[900],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text('TULFLIX', style: _splashHeader),
-            Container(
-              color: Colors.grey[900],
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(),
-                  child: Text('Got sumbong?')
-                )
-              )
-            ),
-          ],
-        )
-      )
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         color: Colors.grey[900],
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: <Widget>[
+//             Text('TULFLIX', style: _splashHeader),
+//             Container(
+//               color: Colors.grey[900],
+//               child: Center(
+//                 child: Padding(
+//                   padding: EdgeInsets.symmetric(),
+//                   child: Text('Got sumbong?')
+//                 )
+//               )
+//             ),
+//           ],
+//         )
+//       )
+//     );
+//   }
+// }
 
 // class MyHomePage extends StatefulWidget {
 //   MyHomePage({Key key, this.title}) : super(key: key);
