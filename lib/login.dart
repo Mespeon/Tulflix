@@ -57,12 +57,56 @@ class LoginFormState extends State<LoginForm> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                TextFormField(
-                  autovalidate: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your email address here.'
+                Padding(
+                  padding: AppThemeData.vpad8,
+                  child: TextFormField(
+                    autovalidate: false,
+                    decoration: const InputDecoration(
+                      labelText: 'Email Address',
+                      labelStyle: AppThemeData.inputFieldPlaceholder,
+                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppThemeData.gray)),
+                    ),
+                    style: AppThemeData.inputFieldText
                   ),
+                ),
+                Padding(
+                  padding: AppThemeData.vpad8,
+                  child: TextFormField(
+                    autovalidate: false,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: AppThemeData.inputFieldPlaceholder,
+                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppThemeData.gray))
+                    ),
+                    style: AppThemeData.inputFieldText,
+                    obscureText: true,
+                  ),
+                ),
+                Padding(
+                  padding: AppThemeData.tpad16,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: RaisedButton(
+                      autofocus: false,
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, tabs);
+                      },
+                      color: AppThemeData.netflixRed,
+                      child: Text(loginStr, style: AppThemeData.raisedButtonsText),
+                      padding: EdgeInsets.all(0),
+                    )
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    autofocus: false,
+                    onPressed: () {},
+                    child: Text('Forgot Password', style: AppThemeData.flatButtonsText),
+                    padding: EdgeInsets.all(0),
+                  )
                 )
               ],
             ),
@@ -70,27 +114,5 @@ class LoginFormState extends State<LoginForm> {
         ],
       ),
     );
-    // return Column(
-    //   mainAxisSize: MainAxisSize.max,
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   children: <Widget>[
-    //     Padding(
-    //       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-    //       child: Text(loginStr, style: AppThemeData.heading)
-    //     ),
-    //     Padding(
-    //       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-    //       child: Text(loginSubtitle, style: AppThemeData.subtitle3)
-    //     ),
-    //     Form(
-    //       child: Column(
-    //         children: <Widget>[
-    //           Text('Form form stuff', style: AppThemeData.bodyText2)
-    //         ],
-    //       )
-    //     ),
-    //   ],
-    // );
   }
 }

@@ -4,8 +4,6 @@ import 'package:tulflix/constants.dart';
 import 'package:tulflix/styles.dart';
 
 import 'constants.dart';
-import 'constants.dart';
-import 'constants.dart';
 import 'styles.dart';
 
 class WalkthroughPage extends StatelessWidget {

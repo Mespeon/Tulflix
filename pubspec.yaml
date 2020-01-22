@@ -74,5 +74,10 @@ flutter:
       fonts:
         - asset: fonts/Bebas_Neue/BebasNeue-Regular.ttf
           weight: 900
+
+    - family: OpenSans
+      fonts:
+        - asset: fonts/Open_Sans/OpenSans-Regular.ttf
+        - asset: fonts/Open_Sans/OpenSans-Bold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: Router.generateRoute,
-      initialRoute: walkthrough,
+      initialRoute: tabs,
       title: 'Tulflix',
       theme: ThemeData(
         primarySwatch: Colors.red,

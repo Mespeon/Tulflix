@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tulflix/constants.dart';
+import 'package:tulflix/dashboard.dart';
+import 'package:tulflix/tabs.dart';
 
 /* Navigation pages */
 import 'package:tulflix/walkthrough.dart';
@@ -14,6 +16,12 @@ class Router {
 
       case login:
         return MaterialPageRoute(builder: (_) => LoginPage());
+
+      case tabs:
+        return MaterialPageRoute(builder: (_) => Dashboard());
+        
+      case dashboard:
+        return MaterialPageRoute(builder: (_) => DashboardView());
 
       default:
         return MaterialPageRoute(builder: (_) => Scaffold(
