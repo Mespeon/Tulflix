@@ -2,8 +2,9 @@
 const String walkthrough = '/';
 const String login = '/login';
 const String tabs = '/tabs';
-const String dashboard = '/dashboard';
+const String dashboard = '/tabs/dashboard';
 const String main = '/main';
+const String profile = '/profile';
 
 /* Texts */
 const String walkthroughMainText = 'TULFLIX';

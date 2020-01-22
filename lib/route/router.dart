@@ -7,6 +7,7 @@ import 'package:tulflix/tabs.dart';
 /* Navigation pages */
 import 'package:tulflix/walkthrough.dart';
 import 'package:tulflix/login.dart';
+import 'package:tulflix/profile.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,6 +23,9 @@ class Router {
         
       case dashboard:
         return MaterialPageRoute(builder: (_) => DashboardView());
+
+      case profile:
+        return MaterialPageRoute(builder: (_) => ProfileView(), fullscreenDialog: true);
 
       default:
         return MaterialPageRoute(builder: (_) => Scaffold(

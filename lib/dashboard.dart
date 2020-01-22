@@ -13,6 +13,14 @@ class DashboardView extends StatelessWidget {
         iconTheme: IconThemeData(color: AppThemeData.offWhite),
         textTheme: TextTheme(title: AppThemeData.appBarTitle),
         automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.view_carousel),
+            onPressed: () {
+              Navigator.pushNamed(context, profile);
+            },
+          )
+        ],
       ),
       body: SafeArea(
         top: true,

@@ -46,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: onTabTapped,
+        elevation: 5,
         backgroundColor: Colors.grey[900],
         unselectedFontSize: AppThemeData.dp8,
         unselectedItemColor: AppThemeData.translucentWhite,
