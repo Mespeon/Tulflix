@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'styles.dart';
 
 /// Backdropped Profile
@@ -56,6 +57,16 @@ class Profile extends StatelessWidget {
   final String coverSrc;
   final String photoSrc;
 
+  final List<String> thumbnails = [
+    'images/sagiri.jpeg',
+    'images/hattie_sagiri.jpg',
+    'images/324560.jpg',
+    'images/327002.jpg',
+    'images/327158.jpg',
+    'images/328925.jpg',
+    'images/362254.jpg'
+  ];
+
   Profile({@required this.firstName, @required this.lastName, @required this.coverSrc, @required this.photoSrc});
 
   @override
@@ -70,7 +81,14 @@ class Profile extends StatelessWidget {
         children: <Widget>[
           Container(
             child: ShaderMask(
-              child: Image.network(coverSrc, fit: BoxFit.cover),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: coverSrc,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                fadeInDuration: Duration(seconds: 1),
+                fadeOutDuration: Duration(seconds: 1),
+              ),
               shaderCallback: (Rect bounds) {
                 return LinearGradient(
                   begin: Alignment.topCenter,
@@ -132,17 +150,22 @@ class Profile extends StatelessWidget {
                               height: 120,
                               child: new ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: 5,
+                                itemCount: thumbnails.length,
                                 itemBuilder: (BuildContext context, int index) {
+                                  print(thumbnails[index]); 
                                   return new Container(
                                     width: 120,
                                     margin: AppThemeData.hpad4,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       color: AppThemeData.translucentWhite,
-                                      borderRadius: BorderRadius.circular(10)
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: AssetImage(thumbnails[index]),
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.center
+                                      )
                                     ),
-                                    child: Text('$index'),
                                   );
                                 }
                               ),
