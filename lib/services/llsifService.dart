@@ -10,8 +10,9 @@ String baseUrl = 'https://marknolledo.pythonanywhere.com/sibyl/';
 /// F U T U R E
 Future<Stargazer> getMembers() async {
   var url = baseUrl + 'ionic/stargazer';
+  print(url);
   final response = await http.get(url);
-  return stargazerFromJson(json.decode(response.body));
+  return stargazerFromJson(response.body);
 }
 
 // Boilnierplate login auth + registration

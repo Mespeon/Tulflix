@@ -19,6 +19,8 @@ abstract class AppThemeData {
   /// Colors
   // static const Color backgroundColor = Color.fromRGBO(17, 17, 17, 1);
   static const Color backgroundColor = Color.fromRGBO(33, 33, 33, 1);
+  static const Color backgroundColorTranslucent = Color.fromRGBO(33, 33, 33, 0.8);
+  static const Color bluegreyBackground = Color.fromRGBO(38, 50, 56, 1);
   static const Color netflixRed = Color.fromRGBO(229, 9, 20, 1);
   static const Color offWhite = Color.fromRGBO(230, 230, 230, 1);
   static const Color translucentWhite = Color.fromRGBO(230, 230, 230, 0.3);
@@ -29,7 +31,7 @@ abstract class AppThemeData {
   static const EdgeInsets pad16 = EdgeInsets.all(16);
   static const EdgeInsets pad24 = EdgeInsets.all(24);
   static const EdgeInsets pad32 = EdgeInsets.all(32);
-  static const EdgeInsets padOvFlR8 = EdgeInsets.only(top: 8, bottom: 8, left: 8);
+  static const EdgeInsets padOvFlR8 = EdgeInsets.only(top: 24, bottom: 8, left: 8);
   static const EdgeInsets padOvFlR16 = EdgeInsets.only(top: 16, bottom: 16, left: 16);
   static const EdgeInsets vpad8 = EdgeInsets.only(top: 8, bottom: 8);
   static const EdgeInsets hpad8 = EdgeInsets.only(left: 8, right: 8);
@@ -49,16 +51,18 @@ abstract class AppThemeData {
   /// Text Styles
   static const TextStyle splashTextRed = TextStyle(fontSize: dp72, fontFamily: 'BebasNeue', color: netflixRed);
   static const TextStyle splashTextWhite = TextStyle(fontSize: dp24, fontFamily: 'BebasNeue', color: offWhite);
-  static const TextStyle raisedButtonsText = TextStyle(color: offWhite, fontWeight: FontWeight.bold);
+  static const TextStyle raisedButtonsRedText = TextStyle(color: offWhite, fontWeight: FontWeight.bold);
+  static const TextStyle raisedButtonsWhiteText = TextStyle(color: backgroundColor, fontWeight: FontWeight.bold);
   static const TextStyle flatButtonsText = TextStyle(color: offWhite, fontSize: dp12);
   static const TextStyle heading = TextStyle(color: offWhite, fontSize: dp40, fontFamily: 'BebasNeue');
   static const TextStyle heading2 = TextStyle(color: offWhite, fontSize: dp40, fontFamily: 'OpenSans', fontWeight: FontWeight.w600);
-  static const TextStyle title = TextStyle(color: offWhite, fontSize: dp36, fontFamily: 'BebasNeue');
+  static const TextStyle title = TextStyle(color: offWhite, fontSize: dp40, fontFamily: 'OpenSans', fontWeight: FontWeight.w800, height: 1);
   static const TextStyle appBarTitle = TextStyle(color: netflixRed, fontFamily: 'BebasNeue', fontSize: dp32);
   static const TextStyle appBarTitleSm = TextStyle(color: offWhite, fontSize: dp14, fontFamily: 'OpenSans', fontWeight: FontWeight.w700);
   static const TextStyle subtitle1 = TextStyle(color: offWhite, fontSize: dp28, fontFamily: 'BebasNeue');
   static const TextStyle subtitle2 = TextStyle(color: offWhite, fontSize: dp24, fontFamily: 'BebasNeue');
   static const TextStyle subtitle3 = TextStyle(color: offWhite, fontSize: dp20, fontFamily: 'BebasNeue');
+  static const TextStyle umbrella = TextStyle(color: offWhite, fontSize: dp14, fontFamily: 'OpenSans', fontWeight: FontWeight.bold);
   static const TextStyle bodyText1 = TextStyle(color: offWhite, fontSize: dp18, fontFamily: 'OpenSans');
   static const TextStyle bodyText2 = TextStyle(color: offWhite, fontSize: dp14, fontFamily: 'OpenSans');
   static const TextStyle bodyText3 = TextStyle(color: offWhite, fontSize: dp12, fontFamily: 'OpenSans');
@@ -66,6 +70,7 @@ abstract class AppThemeData {
 
   /// UI Elements
   static const TextStyle tabs = TextStyle(fontFamily: 'OpenSans', fontSize: dp8);
+  static const TextStyle appBarFlatButtons = TextStyle(fontFamily: 'OpenSans', fontSize: dp12, fontWeight: FontWeight.w200);
   static const TextStyle inputFieldPlaceholder = TextStyle(color: gray, fontSize: dp12);
   static const TextStyle inputFieldText = TextStyle(color: offWhite);
   static const TextStyle footer = TextStyle(fontSize: dp10, fontFamily: 'BebasNeue', color: offWhite);

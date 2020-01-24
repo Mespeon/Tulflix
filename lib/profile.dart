@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'styles.dart';
 
 /// Backdropped Profile
@@ -12,11 +13,16 @@ class ProfileView extends StatelessWidget {
       appBar: ProfileAppBar(username: 'eromangasensei', appBar: AppBar()),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: Profile(
-        firstName: 'Sagiri',
-        lastName: 'Izumi',
-        coverSrc: 'https://wallpapersmug.com/download/1440x2560/0ea484/eromanga-sensei-izumi-sagir-minimal.jpg',
-        photoSrc: 'https://pm1.narvii.com/6527/3b91fda48d105ec9475a4a02e7c4d10ca29e058a_128.jpg'
+      body: SafeArea(
+        top: false,
+        bottom: true,
+        maintainBottomViewPadding: true,
+        child: Profile(
+          firstName: 'Sagiri',
+          lastName: 'Izumi',
+          coverSrc: 'https://wallpapersmug.com/download/1440x2560/0ea484/eromanga-sensei-izumi-sagir-minimal.jpg',
+          photoSrc: 'https://pm1.narvii.com/6527/3b91fda48d105ec9475a4a02e7c4d10ca29e058a_128.jpg'
+        )
       ),
     );
   }
@@ -86,8 +92,8 @@ class Profile extends StatelessWidget {
                 image: coverSrc,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
-                fadeInDuration: Duration(seconds: 1),
-                fadeOutDuration: Duration(seconds: 1),
+                fadeInDuration: Duration(milliseconds: 300),
+                fadeOutDuration: Duration(milliseconds: 300),
               ),
               shaderCallback: (Rect bounds) {
                 return LinearGradient(
@@ -153,19 +159,26 @@ class Profile extends StatelessWidget {
                                 itemCount: thumbnails.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   print(thumbnails[index]); 
-                                  return new Container(
-                                    width: 120,
-                                    margin: AppThemeData.hpad4,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: AppThemeData.translucentWhite,
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: AssetImage(thumbnails[index]),
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.center
+                                  return new AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    duration: Duration(milliseconds: 375),
+                                    child: SlideAnimation(
+                                      horizontalOffset: 160,
+                                      child: Container(
+                                        width: 120,
+                                        margin: AppThemeData.hpad4,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: AppThemeData.translucentWhite,
+                                          borderRadius: BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: AssetImage(thumbnails[index]),
+                                            fit: BoxFit.cover,
+                                            alignment: Alignment.center
+                                          )
+                                        ),
                                       )
-                                    ),
+                                    )
                                   );
                                 }
                               ),

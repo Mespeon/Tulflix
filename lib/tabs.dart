@@ -5,7 +5,7 @@ import 'styles.dart';
 
 /// Route pages
 import 'dashboard.dart';
-import 'profile.dart';
+import 'settings.dart';
 
 class TabsView extends StatelessWidget {
   @override
@@ -16,7 +16,7 @@ class TabsView extends StatelessWidget {
         bottom: true,
         maintainBottomViewPadding: true,
         child: Dashboard()
-      )
+      ),
     );
   }
 }
@@ -30,7 +30,7 @@ class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     DashboardView(),
-    ProfileView(),
+    SettingsView(),
   ];
 
   void onTabTapped(int index) {
@@ -43,27 +43,34 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: onTabTapped,
-        elevation: 5,
-        backgroundColor: Colors.grey[900],
-        unselectedFontSize: AppThemeData.dp8,
-        unselectedItemColor: AppThemeData.translucentWhite,
-        selectedFontSize: AppThemeData.dp8,
-        selectedItemColor: AppThemeData.offWhite,
-        selectedIconTheme: IconThemeData(color: AppThemeData.offWhite),
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home, size: 20),
-            title: new Text(tDashboard, style: AppThemeData.tabs),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.person, size: 20),
-            title: new Text(tProfile, style: AppThemeData.tabs)
-          )
-        ]
+      bottomNavigationBar: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.08,
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: onTabTapped,
+          elevation: 5,
+          backgroundColor: AppThemeData.backgroundColor,
+          unselectedFontSize: AppThemeData.dp8,
+          unselectedItemColor: AppThemeData.translucentWhite,
+          selectedFontSize: AppThemeData.dp8,
+          selectedItemColor: AppThemeData.offWhite,
+          selectedIconTheme: IconThemeData(color: AppThemeData.offWhite),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home, size: 20),
+              title: new Text(tDashboard, style: AppThemeData.tabs),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.settings, size: 20),
+              title: new Text(tProfile, style: AppThemeData.tabs)
+            )
+          ]
+        )
       ),
+      extendBody: true,
     );
   }
 }

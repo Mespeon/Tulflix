@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Routing
 import 'package:tulflix/constants.dart';
@@ -10,13 +11,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: Router.generateRoute,
-      initialRoute: tabs,
-      title: 'Tulflix',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: Color.fromRGBO(17, 17, 17, 1)
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent
+      ),
+      child: MaterialApp(
+        onGenerateRoute: Router.generateRoute,
+        initialRoute: tabs,
+        title: 'Tulflix',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          scaffoldBackgroundColor: Color.fromRGBO(33, 33, 33, 1)
+        )
       )
     );
   }

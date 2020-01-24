@@ -1,10 +1,11 @@
 /* Routing */
-const String walkthrough = '/';
+const String main = '/';
+const String walkthrough = '/walkthrough';
 const String login = '/login';
 const String tabs = '/tabs';
 const String dashboard = '/tabs/dashboard';
-const String main = '/main';
 const String profile = '/profile';
+const String vSettings = '/tabs/settings';
 
 /* Texts */
 const String walkthroughMainText = 'TULFLIX';

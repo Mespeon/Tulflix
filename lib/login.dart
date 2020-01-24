@@ -94,7 +94,7 @@ class LoginFormState extends State<LoginForm> {
                         Navigator.pushReplacementNamed(context, tabs);
                       },
                       color: AppThemeData.netflixRed,
-                      child: Text(loginStr, style: AppThemeData.raisedButtonsText),
+                      child: Text(loginStr, style: AppThemeData.raisedButtonsRedText),
                       padding: EdgeInsets.all(0),
                     )
                   ),

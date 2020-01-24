@@ -33,7 +33,7 @@ class WalkthroughPage extends StatelessWidget {
                       children: <Widget>[
                         RaisedButton(
                           color: AppThemeData.netflixRed,
-                          child: Text('Let\'s go, bruh!', style: AppThemeData.raisedButtonsText),
+                          child: Text('Let\'s go, bruh!', style: AppThemeData.raisedButtonsRedText),
                           onPressed: () {
                             Navigator.pushNamed(context, login);
                           },
