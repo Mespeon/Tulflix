@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tulflix/constants.dart';
-import 'package:tulflix/styles.dart';
 
 import 'constants.dart';
 import 'styles.dart';
+
+import 'logic/logic.dart';
 
 class WalkthroughPage extends StatelessWidget {
   @override
@@ -35,7 +35,7 @@ class WalkthroughPage extends StatelessWidget {
                           color: AppThemeData.netflixRed,
                           child: Text('Let\'s go, bruh!', style: AppThemeData.raisedButtonsRedText),
                           onPressed: () {
-                            Navigator.pushNamed(context, login);
+                            Navigator.pushNamed(context, login, arguments: {'userRepository': UserRepository});
                           },
                           elevation: 1.0,
                         ),

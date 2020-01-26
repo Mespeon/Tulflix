@@ -33,8 +33,10 @@ abstract class AppThemeData {
   static const EdgeInsets pad32 = EdgeInsets.all(32);
   static const EdgeInsets padOvFlR8 = EdgeInsets.only(top: 24, bottom: 8, left: 8);
   static const EdgeInsets padOvFlR16 = EdgeInsets.only(top: 16, bottom: 16, left: 16);
-  static const EdgeInsets vpad8 = EdgeInsets.only(top: 8, bottom: 8);
-  static const EdgeInsets hpad8 = EdgeInsets.only(left: 8, right: 8);
+  // static const EdgeInsets vpad8 = EdgeInsets.only(top: 8, bottom: 8);
+  static const EdgeInsets vpad8 = EdgeInsets.symmetric(vertical: 8);
+  // static const EdgeInsets hpad8 = EdgeInsets.only(left: 8, right: 8);
+  static const EdgeInsets hpad8 = EdgeInsets.symmetric(horizontal: 8);
   static const EdgeInsets hpad4 = EdgeInsets.only(left: 4, right: 4);
   static const EdgeInsets hpad24 = EdgeInsets.only(left: 24, right: 24);
   static const EdgeInsets hpad32 = EdgeInsets.only(left: 32, right: 32);
@@ -47,6 +49,7 @@ abstract class AppThemeData {
   static const EdgeInsets bpad8 = EdgeInsets.only(bottom: 8);
   static const EdgeInsets bpad16 = EdgeInsets.only(bottom: 16);
   static const EdgeInsets rpad8 = EdgeInsets.only(right: 8);
+  static const EdgeInsets rpad16 = EdgeInsets.only(right: 16);
 
   /// Text Styles
   static const TextStyle splashTextRed = TextStyle(fontSize: dp72, fontFamily: 'BebasNeue', color: netflixRed);

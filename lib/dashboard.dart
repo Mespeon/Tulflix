@@ -5,8 +5,13 @@ import 'package:tulflix/constants.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+// Future Models and Services
 import 'package:tulflix/model/llsifModel.dart';
 import 'package:tulflix/services/llsifService.dart';
+
+// State management
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'logic/logic.dart';
 
 class DashboardView extends StatelessWidget {
   @override
@@ -141,10 +146,10 @@ class DashboardBodyState extends State<DashboardBody> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('My Profile', style: AppThemeData.appBarFlatButtons),
+              child: Text('Log Out', style: AppThemeData.appBarFlatButtons),
               textColor: AppThemeData.offWhite,
               onPressed: () {
-                Navigator.pushNamed(context, profile);
+                BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
               },
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -231,7 +236,7 @@ class RowCreator extends StatelessWidget {
         Expanded(
           child: Container(
             margin: AppThemeData.bpad16,
-            height: MediaQuery.of(context).size.height * 0.2,
+            height: MediaQuery.of(context).size.height * 0.3,
             child: new ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: thumbItems.length,
@@ -242,12 +247,17 @@ class RowCreator extends StatelessWidget {
                   child: SlideAnimation(
                     horizontalOffset: 140,
                     child: FadeInAnimation(
-                      child: SizedBox(
+                      child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: Card(
-                          child: Text('$index'), 
-                          color: AppThemeData.translucentWhite,
-                          elevation: 5
+                        margin: AppThemeData.rpad16,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          clipBehavior: Clip.antiAlias,
+                          child: Container(
+                            alignment: Alignment.center,
+                            color: AppThemeData.bluegreyBackground,
+                            child: Text('$index', style: AppThemeData.bodyText2),
+                          ),
                         ),
                       ),
                     ),
@@ -293,15 +303,13 @@ class BrowseListState extends State<Browse> {
     }
   }
 
-  insertEntry(data, index, group) {
-    // FadeInImage.memoryNetwork(
-    //                   placeholder: kTransparentImage,
-    //                   image: 'https://external-preview.redd.it/xLy3FqsplMGhvaWWHAiiXOIPEU84dwd-dQJJfkrcXZ8.png?width=960&crop=smart&format=pjpg&auto=webp&s=2385e5b5188bc188833a625dc4cdf6d459f8bbdd',
-    //                   fit: BoxFit.cover,
-    //                   alignment: Alignment.center,
-    //                   fadeInDuration: Duration(milliseconds: 300),
-    //                   fadeOutDuration: Duration(milliseconds: 300)
-    //                 )
+  @override
+  void dispose() {
+    print('dispose');
+    super.dispose();
+  }
+
+  Widget insertEntry(data, index, group, context) {
     String imgSrc;
     if (data['cardPhoto'] == 'https://raw.githubusercontent.com/Mespeon/Sibyl-S2-Backend/master/psychopass/resources/') {
       imgSrc = 'https://firebasestorage.googleapis.com/v0/b/otonokizaka-3a6d9.appspot.com/o/default.jpg?alt=media&token=b8736d57-e915-41f4-8f68-9ace1496c45e';
@@ -310,30 +318,37 @@ class BrowseListState extends State<Browse> {
       imgSrc = data['cardPhoto'];
     }
 
-    return Card(
-      color: AppThemeData.translucentWhite,
-      child: Container(
-        alignment: Alignment.center,
-        child: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          image: imgSrc,
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          fadeInDuration: Duration(milliseconds: 300),
-          fadeOutDuration: Duration(milliseconds: 300),
-        )
+    return new ConstrainedBox(
+      constraints: BoxConstraints(
+        minWidth: MediaQuery.of(context).size.width,
+        maxWidth: MediaQuery.of(context).size.width,
+        maxHeight: 200
       ),
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          clipBehavior: Clip.antiAlias,
+          child: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: imgSrc,
+            fit: BoxFit.cover,
+            imageScale: 1/1,
+            fadeInDuration: Duration(milliseconds: 300),
+            fadeOutDuration: Duration(milliseconds: 300),
+          ),
+        )
+      )
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildBrowseListingFromFuture() {
     return FutureBuilder<Stargazer>(
       future: _stargazerData,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           print('=========== Retrieved Future data! ===========');
-          // print(snapshot.data.data.toJson());
+          print(members.length);
+          
           var muses = snapshot.data.data.muse;
           var aqours = snapshot.data.data.aqours;
 
@@ -341,168 +356,75 @@ class BrowseListState extends State<Browse> {
           var aqoursMap = aqours.asMap();
 
           // Add Muses
-          museMap.forEach((i, element) {
-            var data = element.toJson();
-            members.add(insertEntry(data, i, 'muse'));
-          });
+          if (members.length == 0 && snapshot.hasData) {
+            museMap.forEach((i, element) {
+              var data = element.toJson();
+              members.add(insertEntry(data, i, 'muse', context));
+            });
 
-          aqoursMap.forEach((i, element) {
-            var data = element.toJson();
-            members.add(insertEntry(data, i, 'aqours'));
-          });
-
-          if (members.length == 0) {
-            print('No data retrieved.');
+            aqoursMap.forEach((i, element) {
+              var data = element.toJson();
+              members.add(insertEntry(data, i, 'aqours', context));
+            });
           }
           else {
-            print('List returned!');
-            return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return AnimationConfiguration.staggeredList(
-                    duration: Duration(milliseconds: 300),
-                    position: index,
-                    child: SlideAnimation(
-                      verticalOffset: 100,
-                      child: FadeInAnimation(
-                        child: Container(
-                          margin: AppThemeData.bpad8,
-                          padding: AppThemeData.bpad8,
-                          height: 200,
-                          child: members.length > 0 ? members[index]
+            print('Not adding Future items; initially built Widget list already has items.');
+          }
+
+          if (members.length == 0 && !snapshot.hasData || snapshot.hasError) {
+            print('No data retrieved or the Future encountered an error.');
+          }
+        }
+        
+        return snapshot.hasData ? SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return AnimationConfiguration.staggeredList(
+                duration: Duration(milliseconds: 300),
+                position: index,
+                child: SlideAnimation(
+                  verticalOffset: 40,
+                  child: FadeInAnimation(
+                    child: Container(
+                      margin: AppThemeData.bpad16,
+                      padding: AppThemeData.hpad8,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          members.length > 0 ? members[index]
                           : Card(
                             color: AppThemeData.translucentWhite,
                             child: Container(
                               alignment: Alignment.center,
                               child: Text('No data found.', style: AppThemeData.heading)
                             ),
-                          )
-                        ),
+                          ),
+                        ],
                       )
-                    )
-                  );
-                },
-                childCount: members.length <= 0 ? 1 : members.length
-              )
-            );
-          }
-        }
-        // return snapshot.hasData ? SliverList(
-        //   delegate: SliverChildBuilderDelegate(
-        //     (BuildContext context, int index) {
-        //       return AnimationConfiguration.staggeredList(
-        //         duration: Duration(milliseconds: 300),
-        //         position: index,
-        //         child: SlideAnimation(
-        //           verticalOffset: 250,
-        //           child: FadeInAnimation(
-        //             child: Container(
-        //               margin: AppThemeData.bpad8,
-        //               padding: AppThemeData.bpad8,
-        //               height: 200,
-        //               child: members.length > 0 ? members[index]
-        //               : Card(
-        //                 color: AppThemeData.translucentWhite,
-        //                 child: Container(
-        //                   alignment: Alignment.center,
-        //                   child: Text('No data found.', style: AppThemeData.heading)
-        //                 ),
-        //               )
-        //             ),
-        //           )
-        //         )
-        //       );
-        //     },
-        //     childCount: members.length <= 0 ? 1 : members.length
-        //   )
-        // )
-        // : 
-        // SliverToBoxAdapter(
-        //   child: Center(
-        //     child: CircularProgressIndicator()
-        //   )
-        // );
+                    ),
+                  )
+                )
+              );
+            },
+            childCount: members.length <= 0 ? 1 : members.length
+          )
+        )
+        : 
+        SliverToBoxAdapter(
+          child: Container(
+            padding: AppThemeData.pad24,
+            child:Center(
+              child: CircularProgressIndicator()
+            )
+          )
+        );
       }
     );
   }
 
-  // pullData() {
-  //   print('Pulling Future.');
-  //   new FutureBuilder<DataNeeded>(
-  //     future: _dataNeeded,
-  //     builder: (BuildContext context, AsyncSnapshot data) {
-  //       if (data.hasData) {
-  //         print('=========== Retrieved Future data! ===========');
-  //         print(data);
-  //         var muses = data.data.data.muse;
-  //         var aqours = data.data.data.aqours;
-
-  //         var museMap = muses.asMap();
-  //         var aqoursMap = aqours.asMap();
-
-  //         // Add Muses
-  //         museMap.forEach((i, element) {
-  //           var data = element.toJson();
-  //           members.add(insertEntry(data, i, 'muse'));
-  //         });
-
-  //         aqoursMap.forEach((i, element) {
-  //           var data = element.toJson();
-  //           members.add(insertEntry(data, i, 'aqours'));
-  //         });
-
-  //         if (members.length == 0) {
-  //           print('No data retrieved.');
-  //         }
-  //       }
-  //       else if (data.hasError) {
-  //         print('Error on Future pull.');
-  //       }
-  //       else {
-  //         print('No data pulled from Future.');
-  //       }
-  //       return CircularProgressIndicator();
-  //     }
-  //   );
-
-  //   print('Members');
-  //   print(members);
-  // }
+  Widget build(BuildContext context) {
+    return _buildBrowseListingFromFuture();
+  }
 }
-
-// class Browse extends StatelessWidget {
-//   final List<dynamic> items;
-//   Browse({@required this.items});
-  
-//   @override
-//   Widget build(BuildContext context) {
-//     return SliverList(
-//       delegate: SliverChildBuilderDelegate(
-//         (BuildContext context, int index) {
-//           return AnimationConfiguration.staggeredList(
-//             child: SlideAnimation(
-//               verticalOffset: 250,
-//               child: FadeInAnimation(
-//                 child: Container(
-//                   margin: AppThemeData.bpad8,
-//                   padding: AppThemeData.hpad8,
-//                   height: 200,
-//                   child: Card(
-//                     color: AppThemeData.translucentWhite,
-//                     child: Container(
-//                       alignment: Alignment.center,
-//                       child: Text('$index', style: AppThemeData.heading),
-//                     )
-//                   )
-//                 )
-//               )
-//             ),
-//             duration: Duration(milliseconds: 375),
-//             position: index,
-//           );
-//         },
-//         childCount: items.length
-//       ),
-//     );
-//   }
-// }

@@ -4,18 +4,23 @@ import 'constants.dart';
 import 'styles.dart';
 
 /// Route pages
-import 'dashboard.dart';
-import 'settings.dart';
+import 'route/router.dart';
+import 'pages.dart';
 
 class TabsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: Router.generateRoute,
       home: SafeArea(
-        top: true,
+        top: false,
         bottom: true,
         maintainBottomViewPadding: true,
         child: Dashboard()
+      ),
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        scaffoldBackgroundColor: AppThemeData.backgroundColor
       ),
     );
   }
@@ -30,6 +35,8 @@ class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     DashboardView(),
+    SpecialsView(),
+    CollectionsView(),
     SettingsView(),
   ];
 
@@ -50,12 +57,12 @@ class _DashboardState extends State<Dashboard> {
           currentIndex: _currentIndex,
           onTap: onTabTapped,
           elevation: 5,
+          type: BottomNavigationBarType.fixed,
           backgroundColor: AppThemeData.backgroundColor,
-          unselectedFontSize: AppThemeData.dp8,
-          unselectedItemColor: AppThemeData.translucentWhite,
           selectedFontSize: AppThemeData.dp8,
           selectedItemColor: AppThemeData.offWhite,
           selectedIconTheme: IconThemeData(color: AppThemeData.offWhite),
+          unselectedIconTheme: IconThemeData(color: AppThemeData.offWhite.withAlpha(150)),
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: [
@@ -64,8 +71,16 @@ class _DashboardState extends State<Dashboard> {
               title: new Text(tDashboard, style: AppThemeData.tabs),
             ),
             BottomNavigationBarItem(
+              icon: new Icon(Icons.stars, size: 20),
+              title: new Text(tSpecials, style: AppThemeData.tabs)
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.library_books, size: 20),
+              title: new Text(tCollection, style: AppThemeData.tabs)
+            ),
+            BottomNavigationBarItem(
               icon: new Icon(Icons.settings, size: 20),
-              title: new Text(tProfile, style: AppThemeData.tabs)
+              title: new Text(tSettings, style: AppThemeData.tabs)
             )
           ]
         )
