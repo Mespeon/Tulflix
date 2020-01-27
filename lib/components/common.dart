@@ -166,6 +166,51 @@ class CustomListItem extends StatelessWidget {
   }
 }
 
+/// Creates an inline icon with text Widget
+class CustomIconText extends StatelessWidget {
+  final List<Widget> item;
+  CustomIconText({@required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: item
+    );
+  }
+}
+
+/// Creates a ListTile Widget
+/// Useful for placing in ListViews as tappable buttons.
+class CustomListTile extends StatelessWidget {
+  final Widget title;
+  final Widget subtitle;
+  final Function onTap;
+  final Icon leading;
+  final Icon trailing;
+  CustomListTile({
+    @required this.title,
+    this.subtitle,
+    @required this.onTap,
+    this.leading,
+    this.trailing
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: title,
+      subtitle: subtitle,
+      leading: leading != null ? leading : Icon(Icons.info_outline),
+      trailing: trailing != null ? trailing : null,
+      onTap: onTap,
+      dense: true
+    );
+  }
+}
+
 /// Creates a Column widget
 /// Useful for generating simple single-column widgets
 class CustomColumnarItem extends StatelessWidget {

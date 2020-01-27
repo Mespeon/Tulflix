@@ -33,6 +33,7 @@ class ProfileCoverView extends StatelessWidget {
 }
 
 /// Creates a dynamic app bar so we could pass different parameters to the it.
+enum useraction { connections, block, mute }
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;  // Simply references an AppBar() widget.
   final String username;
@@ -47,9 +48,24 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(username, style: AppThemeData.appBarTitleSm),
       centerTitle: true,
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.more_vert),
-          onPressed: () {},
+        PopupMenuButton<useraction>(
+          onSelected: (useraction result) {
+            print(result);
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<useraction>> [
+            const PopupMenuItem(
+              value: useraction.connections,
+              child: Text('Connections'),
+            ),
+            const PopupMenuItem(
+              value: useraction.block,
+              child: Text('Block')
+            ),
+            const PopupMenuItem(
+              value: useraction.mute,
+              child: Text('Mute')
+            )
+          ]
         )
       ],
     );
@@ -96,27 +112,31 @@ class Profile extends StatelessWidget {
         fit: StackFit.expand,
         overflow: Overflow.clip,
         children: <Widget>[
-          Container(
-            child: ShaderMask(
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: coverSrc,
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                fadeInDuration: Duration(milliseconds: 300),
-                fadeOutDuration: Duration(milliseconds: 300),
+          Hero(
+            tag: 'coverphoto',
+            transitionOnUserGestures: true,
+            child: Container(
+              child: ShaderMask(
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: coverSrc,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  fadeInDuration: Duration(milliseconds: 300),
+                  fadeOutDuration: Duration(milliseconds: 300),
+                ),
+                shaderCallback: (Rect bounds) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    colors: [
+                      Colors.grey[900].withAlpha(100)
+                    ],
+                    stops: [0.0]
+                  ).createShader(bounds);
+                },
+                blendMode: BlendMode.srcATop,
               ),
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  colors: [
-                    Colors.grey[900].withAlpha(100)
-                  ],
-                  stops: [0.0]
-                ).createShader(bounds);
-              },
-              blendMode: BlendMode.srcATop,
-            ),
+            )
           ),
           Positioned(
             bottom: 0,

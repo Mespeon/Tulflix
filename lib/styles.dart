@@ -33,9 +33,8 @@ abstract class AppThemeData {
   static const EdgeInsets pad32 = EdgeInsets.all(32);
   static const EdgeInsets padOvFlR8 = EdgeInsets.only(top: 24, bottom: 8, left: 8);
   static const EdgeInsets padOvFlR16 = EdgeInsets.only(top: 16, bottom: 16, left: 16);
-  // static const EdgeInsets vpad8 = EdgeInsets.only(top: 8, bottom: 8);
+  static const EdgeInsets vpad4 = EdgeInsets.symmetric(vertical: 4);
   static const EdgeInsets vpad8 = EdgeInsets.symmetric(vertical: 8);
-  // static const EdgeInsets hpad8 = EdgeInsets.only(left: 8, right: 8);
   static const EdgeInsets hpad8 = EdgeInsets.symmetric(horizontal: 8);
   static const EdgeInsets hpad4 = EdgeInsets.only(left: 4, right: 4);
   static const EdgeInsets hpad24 = EdgeInsets.only(left: 24, right: 24);
@@ -46,6 +45,7 @@ abstract class AppThemeData {
   static const EdgeInsets hpad16 = EdgeInsets.only(left: 16, right: 16);
   static const EdgeInsets tpad8 = EdgeInsets.only(top: 8);
   static const EdgeInsets tpad16 = EdgeInsets.only(top: 16);
+  static const EdgeInsets bpad4 = EdgeInsets.only(bottom: 4);
   static const EdgeInsets bpad8 = EdgeInsets.only(bottom: 8);
   static const EdgeInsets bpad16 = EdgeInsets.only(bottom: 16);
   static const EdgeInsets rpad8 = EdgeInsets.only(right: 8);
@@ -74,7 +74,10 @@ abstract class AppThemeData {
   /// UI Elements
   static const TextStyle tabs = TextStyle(fontFamily: 'OpenSans', fontSize: dp8);
   static const TextStyle appBarFlatButtons = TextStyle(fontFamily: 'OpenSans', fontSize: dp12, fontWeight: FontWeight.w200);
+  static const TextStyle listTileTitle = TextStyle(color: offWhite, fontWeight: FontWeight.bold);
   static const TextStyle inputFieldPlaceholder = TextStyle(color: gray, fontSize: dp12);
   static const TextStyle inputFieldText = TextStyle(color: offWhite);
+  static const TextStyle profileUserName = TextStyle(color: offWhite, fontSize: dp24, fontFamily: 'OpenSans', fontWeight: FontWeight.w700, height: 1);
+  static const TextStyle profileAbout = TextStyle(color: offWhite, fontSize: dp12, fontFamily: 'OpenSans', height: 1.3);
   static const TextStyle footer = TextStyle(fontSize: dp10, fontFamily: 'BebasNeue', color: offWhite);
 }

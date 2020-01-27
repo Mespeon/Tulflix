@@ -37,7 +37,14 @@ class Collections extends StatelessWidget {
       child: Container(
         padding: AppThemeData.pad8,
         child: Center(
-          child: Text('Oh wow, collections!', style: AppThemeData.bodyText1),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.collections, color: AppThemeData.offWhite),
+              Text('Oh wow, collections!', style: AppThemeData.bodyText1, maxLines: 2, overflow: TextOverflow.fade),
+            ],
+          )
         ),
       ),
     );

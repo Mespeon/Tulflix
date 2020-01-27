@@ -327,7 +327,7 @@ class BrowseListState extends State<Browse> {
       child: Container(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          clipBehavior: Clip.antiAlias,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           child: FadeInImage.memoryNetwork(
             placeholder: kTransparentImage,
             image: imgSrc,

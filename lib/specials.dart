@@ -37,7 +37,14 @@ class Specials extends StatelessWidget {
       child: Container(
         padding: AppThemeData.pad8,
         child: Center(
-          child: Text('Oh, look! Some specials!', style: AppThemeData.bodyText1),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.star, color: AppThemeData.offWhite),
+              Text('Oh, look! Some specials! But nothing to see here yet.', style: AppThemeData.bodyText1, maxLines: 2, overflow: TextOverflow.fade)
+            ],
+          )
         ),
       ),
     );

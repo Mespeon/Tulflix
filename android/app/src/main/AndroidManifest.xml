@@ -9,7 +9,9 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Tulflix"
-        android:icon="@mipmap/tulflix_launcher">
+        android:icon="@mipmap/tulflix_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

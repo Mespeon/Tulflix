@@ -23,3 +23,15 @@ const String tProfile = 'PROFILE';
 const String tSpecials = 'SPECIALS';
 const String tCollection = 'COLLECTION';
 const String tSettings = 'SETTINGS';
+
+/* SETTINGS TITLE AND SUBTITLES */
+const String sProfile = 'Account';
+const String sProfileSub = 'Change username or email address.';
+const String sNotifications = 'Notifications';
+const String sNotificationSub = 'Change notification settings.';
+const String sPrivacy = 'Privacy';
+const String sPrivacySub = 'Change account privacy settings.';
+const String sSecurity = 'Security';
+const String sSecuritySub = 'Change account security settings.';
+const String sAbout = 'About the App';
+const String sAboutSub = 'Information about the application.';
