@@ -1,9 +1,8 @@
-// import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Routing
+import 'package:tulflix/constants.dart';
 import 'package:tulflix/route/router.dart';
 
 // State management
@@ -15,6 +14,7 @@ import 'components/components.dart';
 import 'tabs.dart';
 import 'login.dart';
 import 'splash.dart';
+import 'walkthrough.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -77,12 +77,21 @@ class MyApp extends StatelessWidget {
 
             // Show the dashboard if the user is logged in/authenticated.
             if (state is AuthenticationAuthenticated) {
+              // view = Navigator.pushReplacementNamed(context, tabs);
               view = TabsView();
             }
 
             // Show the login view if the user is logged out/unauthenticated.
+            // This also assumes that the user has marked the walkthrough as
+            // "Hide next time."
             if (state is AuthenticationUnauthenticated) {
               view = LoginPage(userRepository: userRepository);
+            }
+
+            // Show the walkthrough pager if the user is logged out/unauthenticated
+            // and has not marked yet the view as "Hide next time."
+            if (state is AuthenticationUnauthenticatedWalkthrough) {
+              view = WalkthroughPage(userRepository: userRepository);
             }
 
             // Show a loading indicator while the BLoC is loading/running.
@@ -90,7 +99,10 @@ class MyApp extends StatelessWidget {
               view = LoadingIndicator();
             }
 
-            return view;
+            return AnimatedSwitcher(
+              duration: Duration(milliseconds: 600),
+              child: view
+            );
           },
         )
       )

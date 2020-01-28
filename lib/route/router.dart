@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tulflix/constants.dart';
@@ -8,15 +9,17 @@ import 'package:tulflix/tabs.dart';
 /* Navigation pages */
 import 'package:tulflix/pages.dart';
 
+// We added this so we could directly pass the UserRepository class
+// to the login page from the Walkthrough page.
+import 'package:tulflix/logic/logic.dart';
+
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch(settings.name) {
-      case walkthrough:
-        return MaterialPageRoute(builder: (_) => WalkthroughPage());
-
       case login:
-        var userRepository = settings.arguments;
+        UserRepository userRepository = UserRepository();
         return MaterialPageRoute(builder: (_) => LoginPage(userRepository: userRepository));
+        // return CupertinoPageRoute(builder: (_) => LoginPage(userRepository: userRepository));
 
       case tabs:
         return MaterialPageRoute(builder: (_) => Dashboard());

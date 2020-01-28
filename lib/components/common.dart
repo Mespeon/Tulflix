@@ -9,7 +9,7 @@ import 'package:tulflix/styles.dart';
 class LoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
-    child: CircularProgressIndicator(),
+    child: CircularProgressIndicator()
   );
 }
 

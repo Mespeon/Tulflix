@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
+import 'package:tulflix/logic/logic.dart';
 import 'userrepository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'storage.dart';
 
 
 /// This code is based on the tutorial on BLoCs found in:
@@ -51,8 +53,11 @@ class AuthenticationUninitialized extends AuthenticationState {}
 /// User is logged in/authenticated
 class AuthenticationAuthenticated extends AuthenticationState {}
 
-/// User is logged out/unauthenticated
+/// User is logged out/unauthenticated, and will not show walkthrough.
 class AuthenticationUnauthenticated extends AuthenticationState {}
+
+/// User is logged out/unauthenticated, and will show walkthrough.
+class AuthenticationUnauthenticatedWalkthrough extends AuthenticationState{}
 
 /// Authentication is loading or ongoing
 class AuthenticationLoading extends AuthenticationState {}
@@ -77,7 +82,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         yield AuthenticationAuthenticated();
       }
       else {
-        yield AuthenticationUnauthenticated();
+        final bool willShowWalkthrough = await userRepository.storageAccess.showWalkthrough('showwalkthrough');
+        yield willShowWalkthrough == true || willShowWalkthrough == null ? AuthenticationUnauthenticatedWalkthrough() 
+        : AuthenticationUnauthenticated();
+        // yield AuthenticationUnauthenticated();
       }
     }
 
