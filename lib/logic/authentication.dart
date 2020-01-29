@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:tulflix/logic/logic.dart';
 import 'userrepository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'storage.dart';
 
 
@@ -30,8 +31,10 @@ abstract class AuthenticationEvent extends Equatable {
 }
 
 /// Authentication events
+/// App is started
 class AppStarted extends AuthenticationEvent {}
 
+/// User is authenticated.
 class LoggedIn extends AuthenticationEvent {
   final String token;
 
@@ -44,7 +47,17 @@ class LoggedIn extends AuthenticationEvent {
   String toString() => 'Logged in {token: $token}';
 }
 
+// User is logged out from an authenticated view.
 class LoggedOut extends AuthenticationEvent {}
+
+/// Show walkthrough
+class ShowWalkthrough extends AuthenticationEvent {}
+
+/// Skip walkthrough
+class SkipWalkthrough extends AuthenticationEvent {}
+
+/// Walkthrough is finished
+class ClearWalkthrough extends AuthenticationEvent {}
 
 /// Authentication states
 /// App starting
@@ -61,7 +74,6 @@ class AuthenticationUnauthenticatedWalkthrough extends AuthenticationState{}
 
 /// Authentication is loading or ongoing
 class AuthenticationLoading extends AuthenticationState {}
-
 
 /// Authentication Bloc
 /// This will manage the checks and updates on user's AuthState
@@ -83,7 +95,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       }
       else {
         final bool willShowWalkthrough = await userRepository.storageAccess.showWalkthrough('showwalkthrough');
-        yield willShowWalkthrough == true || willShowWalkthrough == null ? AuthenticationUnauthenticatedWalkthrough() 
+        print(willShowWalkthrough);
+        yield willShowWalkthrough == false || willShowWalkthrough == null ? AuthenticationUnauthenticatedWalkthrough() 
         : AuthenticationUnauthenticated();
         // yield AuthenticationUnauthenticated();
       }
@@ -95,12 +108,81 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield AuthenticationAuthenticated();
     }
 
-    if (event is LoggedOut) {
+    else if (event is LoggedOut) {
       yield AuthenticationLoading();
       await userRepository.deleteToken();
       yield AuthenticationUnauthenticated();
     }
+
+    else if (event is ClearWalkthrough) {
+      yield AuthenticationUnauthenticated();
+    }
   } 
+}
+
+/// Walkthrough states
+abstract class WalkthroughState extends Equatable {
+  const WalkthroughState();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// Walkthrough state being decided
+class WalkthroughInitial extends WalkthroughState{}
+
+class WalkthroughDecided extends WalkthroughState{
+  final String walkthroughState;
+  WalkthroughDecided({@required this.walkthroughState});
+
+  @override
+  List<Object> get props => [walkthroughState];
+
+  @override
+  String toString() => 'WalkthroughDecided { walkthrough: $walkthroughState}';
+}
+
+/// Walkthrough events
+abstract class WalkthroughEvent extends Equatable {
+  const WalkthroughEvent();
+}
+
+/// User checked the 'skip walkthrough' checkbox
+class ShouldSkipWalkthrough extends WalkthroughEvent {
+  final bool skipWalkthrough;
+  const ShouldSkipWalkthrough({@required this.skipWalkthrough});
+
+  @override
+  List<Object> get props => [skipWalkthrough];
+
+  @override
+  String toString() => 'SkipWalkthrough updated {skipWalkthrough: $skipWalkthrough}';
+}
+
+/// The walkthrough BLoC
+class WalkthroughBloc extends Bloc<WalkthroughEvent, WalkthroughState> {
+  final UserRepository userRepository;
+  final AuthenticationBloc authenticationBloc;
+  WalkthroughBloc({
+    @required this.userRepository,
+    @required this.authenticationBloc
+  }) : assert(userRepository != null), assert(authenticationBloc != null);
+
+  WalkthroughState get initialState => WalkthroughInitial();
+
+  @override
+  Stream<WalkthroughState> mapEventToState(WalkthroughEvent event) async* {
+    if (event is ShouldSkipWalkthrough) {
+      await userRepository.storageAccess.writeWalkthroughSetting('showwalkthrough', true);
+      authenticationBloc.add(SkipWalkthrough());
+      yield WalkthroughDecided(walkthroughState: 'Will skip walkthrough');
+    }
+    else if (event is! ShouldSkipWalkthrough) {
+      await userRepository.storageAccess.writeWalkthroughSetting('showwalkthrough', false);
+      authenticationBloc.add(ShowWalkthrough());
+      yield WalkthroughDecided(walkthroughState: 'Will show walkthrough');
+    }
+  }
 }
 
 /// Login states
@@ -126,7 +208,7 @@ class LoginFailure extends LoginState {
   List<Object> get props => [error];
 
   @override
-  String toString() => 'LoginFailure { error: $error';
+  String toString() => 'LoginFailure { error: $error}';
 }
 
 /// Login events

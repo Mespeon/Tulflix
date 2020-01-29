@@ -1,3 +1,5 @@
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tulflix/constants.dart';
@@ -5,6 +7,10 @@ import 'package:transparent_image/transparent_image.dart';
 import 'components/components.dart';
 import 'constants.dart';
 import 'styles.dart';
+
+// State management
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tulflix/logic/logic.dart';
 
 class SettingsView extends StatelessWidget {
   @override
@@ -34,6 +40,33 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _logoutPrompt() async {
+      return showDialog<void>(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Log Out'),
+            content: Text('Are you sure you want to log out?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  print('Do not logout.');
+                },
+              )
+            ],
+          );
+        }   
+      );
+    }
+
     return ListView(
       scrollDirection: Axis.vertical,
       cacheExtent: 100,
@@ -171,7 +204,26 @@ class Settings extends StatelessWidget {
               )
             ),
           )
-        )
+        ),
+        LimitedBox(
+          maxHeight: 100,
+          child: Padding(
+            padding: AppThemeData.hpad8,
+            child: Card(
+              color: AppThemeData.bluegreyBackground,
+              child: CustomListTile(
+                title: Text('Log Out', style: AppThemeData.listTileTitle),
+                subtitle: Text('Log out of Tulflix.', style: AppThemeData.bodyText3),
+                leading: Icon(Icons.exit_to_app, color: AppThemeData.offWhite),
+                trailing: Icon(Icons.arrow_forward, color: AppThemeData.offWhite),
+                onTap: () {
+                  // BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                  _logoutPrompt();
+                },
+              )
+            ),
+          )
+        ),
       ],
     );
   }

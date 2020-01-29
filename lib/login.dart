@@ -52,6 +52,11 @@ class LoginFormState extends State<LoginForm> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _onLoginButtonPressed() {
       BlocProvider.of<LoginBloc>(context).add(

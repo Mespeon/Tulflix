@@ -72,37 +72,53 @@ class MyApp extends StatelessWidget {
 
             // Show the splash screen if the BLoC is initializing.
             if (state is AuthenticationUninitialized) {
-              view = SplashPage();
+              view = AnimatedSwitcher(
+                duration: Duration(milliseconds: 800),
+                child: SplashPage()
+              );
             }
 
             // Show the dashboard if the user is logged in/authenticated.
-            if (state is AuthenticationAuthenticated) {
+            else if (state is AuthenticationAuthenticated) {
               // view = Navigator.pushReplacementNamed(context, tabs);
-              view = TabsView();
+              // view = TabsView();
+              view = AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                child: TabsView()
+              );
             }
 
             // Show the login view if the user is logged out/unauthenticated.
             // This also assumes that the user has marked the walkthrough as
             // "Hide next time."
-            if (state is AuthenticationUnauthenticated) {
-              view = LoginPage(userRepository: userRepository);
+            else if (state is AuthenticationUnauthenticated) {
+              // view = LoginPage(userRepository: userRepository);
+              view = AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                child: LoginPage(userRepository: userRepository)
+              );
             }
 
             // Show the walkthrough pager if the user is logged out/unauthenticated
             // and has not marked yet the view as "Hide next time."
-            if (state is AuthenticationUnauthenticatedWalkthrough) {
-              view = WalkthroughPage(userRepository: userRepository);
+            else if (state is AuthenticationUnauthenticatedWalkthrough) {
+              // view = WalkthroughPage(userRepository: userRepository);
+              view = AnimatedSwitcher(
+                duration: Duration(milliseconds: 800),
+                child: WalkthroughPage(userRepository: userRepository),
+              );
             }
 
             // Show a loading indicator while the BLoC is loading/running.
-            if (state is AuthenticationLoading) {
-              view = LoadingIndicator();
+            else if (state is AuthenticationLoading) {
+              // view = LoadingIndicator();
+              view = AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                child: LoadingIndicator()
+              );
             }
 
-            return AnimatedSwitcher(
-              duration: Duration(milliseconds: 600),
-              child: view
-            );
+            return view;
           },
         )
       )

@@ -145,17 +145,24 @@ class DashboardBodyState extends State<DashboardBody> {
             collapseMode: CollapseMode.parallax,
           ),
           actions: <Widget>[
-            FlatButton(
-              child: Text('Log Out', style: AppThemeData.appBarFlatButtons),
-              textColor: AppThemeData.offWhite,
-              onPressed: () {
-                BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-              },
+            IconButton(
+              icon: Icon(Icons.account_circle, color: AppThemeData.offWhite),
               splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
+              onPressed: () {
+                Navigator.pushNamed(context, profile);
+              },
             )
+            // FlatButton(
+            //   child: Text('Log Out', style: AppThemeData.appBarFlatButtons),
+            //   textColor: AppThemeData.offWhite,
+            //   onPressed: () {
+            //     BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+            //   },
+            //   splashColor: Colors.transparent,
+            //   focusColor: Colors.transparent,
+            //   highlightColor: Colors.transparent,
+            //   hoverColor: Colors.transparent,
+            // )
           ],
         ),
         SliverToBoxAdapter(
@@ -345,7 +352,7 @@ class BrowseListState extends State<Browse> {
     return FutureBuilder<Stargazer>(
       future: _stargazerData,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData && members.length == 0) {
           print('=========== Retrieved Future data! ===========');
           print(members.length);
           

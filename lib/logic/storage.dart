@@ -18,7 +18,7 @@ class StorageAccess {
   }
 
   Future writeToStorage(String key, String value) async {
-
+    
   }
 
   Future deleteFromStorage(String key) async {
@@ -32,6 +32,12 @@ class StorageAccess {
       var willShowWalkthrough = sharedpref.get(key);
       return willShowWalkthrough != null ? false : true;
     }
+  }
+
+  Future writeWalkthroughSetting(String key, bool value) async {
+    var sharedpref = await SharedPreferences.getInstance();
+    sharedpref.setBool(key, value);
+    return;
   }
 
 }

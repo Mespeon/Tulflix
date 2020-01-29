@@ -16,10 +16,10 @@ import 'package:tulflix/logic/logic.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch(settings.name) {
-      case login:
-        UserRepository userRepository = UserRepository();
-        return MaterialPageRoute(builder: (_) => LoginPage(userRepository: userRepository));
-        // return CupertinoPageRoute(builder: (_) => LoginPage(userRepository: userRepository));
+      // case login:
+      //   UserRepository userRepository = UserRepository();
+      //   return MaterialPageRoute(builder: (_) => LoginPage(userRepository: userRepository));
+      //   // return CupertinoPageRoute(builder: (_) => LoginPage(userRepository: userRepository));
 
       case tabs:
         return MaterialPageRoute(builder: (_) => Dashboard());
